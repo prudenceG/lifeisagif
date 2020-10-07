@@ -1,0 +1,3 @@
+export const FETCH_STARTED = "FETCH_STARTED";
+export const FETCH_SUCCEED = "FETCH_SUCCEED";
+export const FETCH_FAILED = "FETCH_FAILED";

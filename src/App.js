@@ -1,28 +1,66 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
+import { fetchGifs } from './store/actions/fetchGifs';
+import GifsList from "./components/gifList/GifList";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+const mapStateToProps = state => ({
+  gifs: state.gifs,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchGifs : (searchValue, numberGifs) => dispatch(fetchGifs(searchValue, numberGifs)),
   }
 }
 
-export default App;
+const App = props => {
+  const [searchValue, setSearchValue] = useState('Hello');
+  const [number, setNumber] = useState(200);
+  const { gifs, fetchGifs } = props;
+
+  useEffect(() => {
+    fetchGifs(searchValue, number);
+  }, [])
+
+  const handleSubmitSearchForm = (e) => {
+    e.preventDefault();
+    fetchGifs(searchValue, number);
+  };
+
+  const handleChangeSearchValue = e => {
+    setSearchValue(e.target.value);
+  };
+  
+  return (
+    <div>
+      <form className="formulaire" onSubmit={e => handleSubmitSearchForm(e)}>
+        <input
+          type="text"
+          placeholder="votre mot-clef"
+          onChange={handleChangeSearchValue}
+        />
+        <button>Rechercher</button>
+      </form>
+
+      <GifsList gifs={gifs.results} />
+      <GifsList gifs={[]} />
+
+      {/* <Mood
+        angry={this.state.angry}
+        happy={this.state.happy}
+        moreGif={this.getMoreGif}
+        getdataFeel={this.getDataFeel}
+        data={this.state.dataGifFeel}
+        next={this.state.next}
+        previous={this.state.previous}
+        click={this.state.click}
+      /> */}
+    </div>
+  );
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
