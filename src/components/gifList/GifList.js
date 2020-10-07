@@ -20,7 +20,7 @@ const GifsList = (props) => {
         <p>Il n'y a pas de résultats pour cette recherche, essaye autre chose ;)</p>
       );
     }
-
+    
     return (
       <Fragment>
         {array

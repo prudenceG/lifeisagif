@@ -1,31 +1,22 @@
-import React, {useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import { fetchGifs } from './store/actions/fetchGifs';
+import  { fetchGifs }  from './store/actions/fetchGifs';
 import GifsList from "./components/gifList/GifList";
 
-const mapStateToProps = state => ({
-  gifs: state.gifs,
-});
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchGifs : (searchValue, numberGifs) => dispatch(fetchGifs(searchValue, numberGifs)),
-  }
-}
-
-const App = props => {
+const App = () => {
+  const dispatch = useDispatch();
+  const gifs = useSelector(state => state.gifs);
   const [searchValue, setSearchValue] = useState('Hello');
   const [number, setNumber] = useState(200);
-  const { gifs, fetchGifs } = props;
 
   useEffect(() => {
-    fetchGifs(searchValue, number);
+    fetchGifs(searchValue, number, dispatch);
   }, [])
 
   const handleSubmitSearchForm = (e) => {
     e.preventDefault();
-    fetchGifs(searchValue, number);
+    fetchGifs(searchValue, number, dispatch);
   };
 
   const handleChangeSearchValue = e => {
@@ -60,7 +51,4 @@ const App = props => {
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+export default App;

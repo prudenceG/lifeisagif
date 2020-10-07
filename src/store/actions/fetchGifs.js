@@ -20,7 +20,7 @@ const fetchFailed = err => {
   };
 };
 
-export const fetchGifs = (searchValue, numberGif) => async dispatch => {
+export const fetchGifs = async (searchValue, numberGif, dispatch) => {
   dispatch(fetchStarted());
 
   try {
