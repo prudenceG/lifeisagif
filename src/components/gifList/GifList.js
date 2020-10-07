@@ -1,10 +1,24 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import React, { Fragment } from 'react';
+import React from 'react';
+import { makeStyles } from "@material-ui/core/styles";
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
+import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
+import Fab from '@material-ui/core/Fab';
 import { usePagination } from './../../hooks/usePagination';
 import Gif from '../gif/gif';
+import './giflist.css'
+
+const styles = makeStyles({
+  circularProgress: {
+    color: 'white'
+  }
+})
 
 const GifsList = (props) => {
-  const arrayLength = props.gifs.length;
+  const {results, loading } = props.gifs;
+  const arrayLength = results.length;
+  const classes = styles();
+
   const [
     previous,
     next,
@@ -12,7 +26,7 @@ const GifsList = (props) => {
     handleClickNextResults,
     isNextButtonHidden,
     isPreviousButtonHidden,
-  ] = usePagination(arrayLength, 10);
+  ] = usePagination(arrayLength, 8);
 
   const sliceGifArray = (array, previous, next) => {
     if (!array.length) {
@@ -22,38 +36,50 @@ const GifsList = (props) => {
     }
     
     return (
-      <Fragment>
+      <div className="gif-results">
         {array
           .slice(previous, next)
           .map(gif => (
             <Gif gif={gif} key={gif.images.fixed_height.url}/>
           ))
         }
-      </Fragment>
+      </div>
     );
   }
 
   const renderCircularProgress = () => {
     return (
       <div className="circular-progress-container">
-        <CircularProgress /> 
+        <CircularProgress className={classes.circularProgress}/> 
       </div>
     );
   }
 
   return (
     <div className="gifs-list-container">
-      <div className="gifs-results-container">
-        {props.gifs.loading
-          ? renderCircularProgress()
-          : sliceGifArray(props.gifs, previous, next)
-        }
+      <div className="gif-results-container">
+      {loading
+        ? renderCircularProgress()
+        : sliceGifArray(results, previous, next)
+      }
       </div>
 
       <div className="pagination-container">
-        {!isPreviousButtonHidden && <button onClick={handleClickPreviousResults}>{'<'}</button>}
-        <span>{`${previous} - ${next}`}</span>
-        {!isNextButtonHidden && <button onClick={handleClickNextResults}>{'>'}</button>}
+        <div className="button-container">
+          {!isPreviousButtonHidden &&
+            <Fab color="primary" aria-label="add" onClick={handleClickPreviousResults}>
+              <ArrowBackIosOutlinedIcon />
+            </Fab>
+          }
+        </div>
+        <div className="numbering">{`${previous} - ${next}`}</div>
+        <div className="button-container">
+          {!isNextButtonHidden &&
+            <Fab color="primary" aria-label="add" onClick={handleClickNextResults}>
+              <ArrowForwardIosOutlinedIcon />
+            </Fab>          
+          }
+        </div>
       </div>
     </div>
   );

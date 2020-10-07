@@ -1,0 +1,39 @@
+.gifs-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.gif-results-container {
+  background-color: #4050B5;
+  padding: 35px 0;
+  min-height: 440px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.gif-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-container {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.button-container {
+  min-width: 56px;
+}
+
+.numbering {
+  margin: 0 15px;
+  min-width: 60px;
+  text-align: center;
+}

@@ -64,7 +64,8 @@ const styles = theme => ({
     transition: theme.transitions.create("opacity")
   },
   circularProgress: {
-    position: "absolute",
+    position: 'absolute',
+    color: theme.palette.common.white,
   }
 });
 

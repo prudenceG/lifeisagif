@@ -1,26 +1,20 @@
-.App {
-  width: 100%;
-  padding: 50px 0 50px 0;
-}
-.formulaire {
+@import url('https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap');
+
+.form-container {
   text-align: center;
-}
-.voir-plus {
-  text-align: right;
-  margin-right: 20px;
-}
-.header {
-  background-color: white;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
 }
 
-.circular-progress-container {
-  display: flex;
-  justify-content: center;
+.search-textfield {
+  margin-bottom: 15px !important;
 }
 
-.gifs-results-container {
-  min-height: 700px;
-}
+h1 {
+  font-family: 'Nothing You Could Do', cursive;
+  margin: 40px 0 0 40px;
+  font-size: 40px;
+} 
