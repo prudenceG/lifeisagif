@@ -1,6 +1,8 @@
 import { FETCH_STARTED, FETCH_SUCCEED, FETCH_FAILED } from "./types";
 import axios from "axios";
 
+const API_KEY = process.env.REACT_APP_GIPHY_API_KEY;
+
 const fetchStarted = () => {
   return {
     type: FETCH_STARTED
@@ -25,7 +27,7 @@ export const fetchGifs = async (searchValue, numberGif, dispatch) => {
 
   try {
     const response = await axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=1JdcZTBUIBXD2kaE1z59aDzYXu2VtVGH&q=${searchValue}&limit=${numberGif}&offset=0&rating=G&lang=fr`
+      `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${searchValue}&limit=${numberGif}&offset=0&rating=G&lang=fr`
     );
 
     dispatch(fetchSucceed(response.data.data))

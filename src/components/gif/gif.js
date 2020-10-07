@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Fragment, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import ButtonBase from "@material-ui/core/ButtonBase";
+import { CircularProgress, ButtonBase } from "@material-ui/core";
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -22,6 +21,7 @@ const styles = theme => ({
     position: "relative",
     height: 200,
     width: "auto",
+    minWidth: 200,
     margin: "10px",
     [theme.breakpoints.down("xs")]: {
       width: "auto",
@@ -62,10 +62,28 @@ const styles = theme => ({
     backgroundColor: theme.palette.common.black,
     opacity: 0,
     transition: theme.transitions.create("opacity")
+  },
+  circularProgress: {
+    position: "absolute",
   }
 });
 
 const Gif = props => {
+  const useLoadedState = () => {
+    const [loaded, setLoaded] = useState(false);
+  
+    return [
+      loaded,
+      setLoaded
+    ]
+  }
+  
+  const [loaded, setLoaded] = useLoadedState();
+  
+  const handleImageLoading = () => {
+    setLoaded(true); 
+  }
+
   const { classes, gif } = props;
 
   return (
@@ -76,7 +94,9 @@ const Gif = props => {
             className={classes.imageGIF}
             src={gif.images.fixed_height.url}
             alt="gif"
+            onLoad={handleImageLoading}
           />
+          {!loaded && <CircularProgress className={classes.circularProgress} /> }
           <span className={classes.imageBackdrop} />
           <div className={classes.social}>
             <FacebookShareButton
