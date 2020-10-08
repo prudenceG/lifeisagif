@@ -1,5 +1,5 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
@@ -18,6 +18,7 @@ const GifsList = (props) => {
   const {results, loading } = props.gifs;
   const arrayLength = results.length;
   const classes = styles();
+  const intervall = 8;
 
   const [
     previous,
@@ -26,7 +27,14 @@ const GifsList = (props) => {
     handleClickNextResults,
     isNextButtonHidden,
     isPreviousButtonHidden,
-  ] = usePagination(arrayLength, 8);
+    setNext,
+    setPrevious,
+  ] = usePagination(arrayLength, intervall);
+
+  useEffect(() => {
+    setPrevious(0);
+    setNext(intervall);
+  }, [results]);
 
   const sliceGifArray = (array, previous, next) => {
     if (!array.length) {

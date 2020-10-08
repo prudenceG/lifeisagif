@@ -45,5 +45,7 @@ export const usePagination = (arrayLength, intervall) => {
     handleClickNextResults,
     isNextButtonHidden,
     isPreviousButtonHidden,
+    setNext,
+    setPrevious,
   ];
 }
