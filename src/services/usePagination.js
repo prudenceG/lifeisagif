@@ -41,11 +41,11 @@ export const usePagination = (arrayLength, intervall) => {
   return [
     previous,
     next,
-    handleClickPreviousResults,
-    handleClickNextResults,
-    isNextButtonHidden,
-    isPreviousButtonHidden,
     setNext,
     setPrevious,
+    isPreviousButtonHidden,
+    isNextButtonHidden,
+    handleClickPreviousResults,
+    handleClickNextResults,
   ];
 }

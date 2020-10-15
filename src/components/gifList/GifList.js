@@ -1,12 +1,10 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
-import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
-import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
-import Fab from '@material-ui/core/Fab';
-import { usePagination } from './../../hooks/usePagination';
+import { usePagination } from './../../services/usePagination';
 import Gif from '../gif/gif';
 import './giflist.css'
+import Pagination from '../pagination/Pagination';
 
 const styles = makeStyles({
   circularProgress: {
@@ -19,24 +17,21 @@ const GifsList = (props) => {
   const arrayLength = results.length;
   const classes = styles();
   const intervall = 8;
+  const paginationHook = usePagination(arrayLength, intervall);
 
   const [
     previous,
     next,
-    handleClickPreviousResults,
-    handleClickNextResults,
-    isNextButtonHidden,
-    isPreviousButtonHidden,
     setNext,
     setPrevious,
-  ] = usePagination(arrayLength, intervall);
+  ] = paginationHook;
 
   useEffect(() => {
     setPrevious(0);
     setNext(intervall);
   }, [results]);
 
-  const sliceGifArray = (array, previous, next) => {
+  const slicedGifArray = (array, previous, next) => {
     if (!array.length) {
       return (
         <p>Il n'y a pas de résultats pour cette recherche, essaye autre chose ;)</p>
@@ -68,29 +63,13 @@ const GifsList = (props) => {
       <div className="gif-results-container">
       {loading
         ? renderCircularProgress()
-        : sliceGifArray(results, previous, next)
+        : slicedGifArray(results, previous, next)
       }
       </div>
 
-      <div className="pagination-container">
-        <div className="button-container">
-          {!isPreviousButtonHidden &&
-            <Fab color="primary" aria-label="add" onClick={handleClickPreviousResults}>
-              <ArrowBackIosOutlinedIcon />
-            </Fab>
-          }
-        </div>
-        <div className="numbering">{`${previous} - ${next}`}</div>
-        <div className="button-container">
-          {!isNextButtonHidden &&
-            <Fab color="primary" aria-label="add" onClick={handleClickNextResults}>
-              <ArrowForwardIosOutlinedIcon />
-            </Fab>          
-          }
-        </div>
-      </div>
+      <Pagination paginationHook={paginationHook} />
     </div>
   );
 }
 
-export default GifsList;
+export default memo(GifsList);

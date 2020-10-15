@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import  { fetchGifs }  from './store/actions/fetchGifs';
+import  { fetchGifs }  from './store/effects/fetchGifs';
 import GifsList from "./components/gifList/GifList";
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import Fab from '@material-ui/core/Fab';

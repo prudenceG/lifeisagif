@@ -1,26 +1,7 @@
-import { FETCH_STARTED, FETCH_SUCCEED, FETCH_FAILED } from "./types";
 import axios from "axios";
+import { fetchStarted, fetchSucceed, fetchFailed} from './../actions';
 
 const API_KEY = process.env.REACT_APP_GIPHY_API_KEY;
-
-const fetchStarted = () => {
-  return {
-    type: FETCH_STARTED
-  };
-};
-
-const fetchSucceed = data => {
-  return {
-    type: FETCH_SUCCEED,
-    payload: data
-  };
-};
-const fetchFailed = err => {
-  return {
-    type: FETCH_FAILED,
-    payload: err
-  };
-};
 
 export const fetchGifs = async (searchValue, numberGif, dispatch) => {
   dispatch(fetchStarted());
